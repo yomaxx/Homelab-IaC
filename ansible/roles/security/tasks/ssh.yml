@@ -23,17 +23,7 @@
     - regexp: "^X11Forwarding"
       line: "X11Forwarding {{ security_ssh_x11_forwarding }}"
   notify: restart ssh
-
-- name: Add configured user(s) accounts to passwordless sudoers.
-  lineinfile:
-    dest: /etc/sudoers
-    regexp: '^{{ item }}'
-    line: '{{ item }} ALL=(ALL) NOPASSWD: ALL'
-    state: present
-    validate: 'visudo -cf %s'
-    mode: 0440
-  with_items: "{{ security_sudoers_passwordless }}"
-  when: security_sudoers_passwordless | length > 0
+  
 
 - name: Add configured user(s) allowed to connect over ssh
   lineinfile:
