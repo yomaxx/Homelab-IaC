@@ -1,0 +1,10 @@
+[Unit]
+Description=n8n
+
+[Service]
+EnvironmentFile=/etc/n8n/n8n.env
+ExecStart=/usr/local/bin/n8n
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

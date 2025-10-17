@@ -1,0 +1,35 @@
+# update lxc containers
+- name: Update and upgrade apt packages
+  apt:
+    update_cache: yes
+    upgrade: dist
+  tags: update
+
+# Add GPG key for NodeSource
+- name: Add NodeSource GPG key
+  ansible.builtin.apt_key:
+    url: 'https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key'
+    state: present
+
+# curl -sL https://deb.nodesource.com/setup_20.x | bash -
+- name: Add NodeSource APT repository for Node.js 20.x
+  ansible.builtin.apt_repository:
+    #repo: 'deb https://deb.nodesource.com/node_20.x {{ ansible_distribution_release| default("nodistro") }} main'
+    #repo: 'deb https://deb.nodesource.com/node_20.x bullseye main'
+    repo: 'deb https://deb.nodesource.com/node_20.x nodistro main'
+    state: present
+    filename: nodesource
+
+# install nodejs
+- name: Install Node.js
+  apt:
+    name: nodejs
+    state: present
+    update_cache: yes
+
+#install apt packages
+- name: Install apt packages
+  apt:
+    name: "{{ apt_packages }}"
+    state: present
+    update_cache: yes

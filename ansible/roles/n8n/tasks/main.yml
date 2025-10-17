@@ -1,0 +1,40 @@
+# install n8n using npm
+- name: Install n8n using npm
+  npm:
+    name: n8n
+    global: yes
+    state: present
+
+# Create n8n configuration directory
+- name: Create n8n configuration directory
+  file:
+    path: /etc/n8n
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+  # template n8n env file
+- name: Create n8n environment file
+  template:
+    dest: /etc/n8n/n8n.env
+    src: n8n.env.j2
+    mode: '0644'
+
+  # Create a systemd service file for n8n with content from a template
+- name: Create n8n systemd service file
+  template:
+    dest: /etc/systemd/system/n8n.service
+    src: n8n.service.j2
+    mode: '0644'
+  notify:
+    - Reload systemd
+
+  # Enable and start the n8n service
+- name: Enable and start n8n service
+  systemd:
+    name: n8n
+    enabled: yes
+    state: started
+
+

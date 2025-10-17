@@ -1,0 +1,21 @@
+---
+- name: setup lxc
+  hosts: 
+    - all
+  become: true
+  roles:
+    - setup
+
+- name: security hardening
+  hosts: 
+    - all
+  become: true
+  roles:
+    - security
+
+- name: n8n lxc setup
+  hosts: 
+    - n8n-LXC
+  become: true
+  roles:
+    - n8n

@@ -1,0 +1,6 @@
+---
+- include_tasks: fail2ban.yml
+
+- include_tasks: ssh.yml
+
+- include_tasks: autoupdate-debian.yml
